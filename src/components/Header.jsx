@@ -10,7 +10,7 @@ import { useContext } from "react";
 import { LanguageContext } from "src/contexts/LanguageContext";
 import { useTheme } from "src/contexts/theamProvider";
 import { useTranslations } from "src/utils/translations";
-
+ 
 const Header = () => {
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage } = useContext(LanguageContext);
