@@ -6,8 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import SideWithNav from "src/components/SideWithNav";
 import IntlProvider from "src/utils/IntlProvider";
 import "../globals.css";
-// import { Provider } from "react-redux";
-// import store from "src/redux/store/store";
+import { Providers } from "../providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,7 +41,7 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={lang} dir={dir}>
       <body className={inter.className}>
-        {/* <Provider store={store}> */}
+        <Providers>
           <ThemeProvider attribute="class">
             <IntlProvider locale={lang} messages={messages}>
               <SideWithNav />
@@ -50,7 +49,7 @@ export default async function RootLayout({ children, params }) {
               <ToastContainer />
             </IntlProvider>
           </ThemeProvider>
-        {/* </Provider> */}
+        </Providers>
       </body>
     </html>
   );

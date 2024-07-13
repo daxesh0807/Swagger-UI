@@ -1,11 +1,27 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserStart } from "src/redux/userSlice";
 // import { useDispatch, useSelector } from "react-redux";
 
 const CasinoView = () => {
   // const dispatch = useDispatch();
   // const { data, isLoading, error } = useSelector((state) => state.someReducer);
+
+  const dispatch = useDispatch();
+  const { data, loading, error } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    dispatch(fetchUserStart());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("data:::::::::::", data);
+    console.log("loading:::::::::::", loading);
+    console.log("error:::::::::::", error);
+  }, []);
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-10 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
