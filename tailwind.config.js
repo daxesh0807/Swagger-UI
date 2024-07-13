@@ -15,5 +15,18 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addVariant, e }) {
+      addVariant('rtl', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.rtl .${e(`rtl${separator}${className}`)}`
+        })
+      })
+      addVariant('ltr', ({ modifySelectors, separator }) => {
+        modifySelectors(({ className }) => {
+          return `.ltr .${e(`ltr${separator}${className}`)}`
+        })
+      })
+    }
+  ],
 };

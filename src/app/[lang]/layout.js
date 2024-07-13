@@ -1,10 +1,11 @@
-import { Inter } from "next/font/google";
-import "../globals.css";
-import Header from "src/components/Header";
 import { ThemeProvider } from "next-themes";
-import { LanguageProvider } from "src/contexts/LanguageContext";
+import { Inter } from "next/font/google";
 import { notFound } from "next/navigation";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import SideWithNav from "src/components/SideWithNav";
 import IntlProvider from "src/utils/IntlProvider";
+import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,31 +18,34 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ar" }];
 }
 
-export default async function RootLayout({ children, params }) {
+// Utility function to determine text direction
+const getDirection = (lang) => (lang === "ar" ? "rtl" : "ltr");
 
-  console.log("params:::::::::", params)
-  const lang = params.lang || 'en';
-  console.log("lang:::::::::", lang)
+export default async function RootLayout({ children, params }) {
+  console.log("params:::::::::", params);
+  const lang = params.lang || "en";
+  console.log("lang:::::::::", lang);
 
   let messages;
   try {
     messages = (await import(`../../public/locales/${lang}/common.json`))
       .default;
   } catch (error) {
-    console.log("error::::::::", error)
+    console.log("error::::::::", error);
     notFound();
   }
 
+  const dir = getDirection(lang);
+
   return (
-    <html lang={lang}>
+    <html lang={lang} dir={dir}>
       <body className={inter.className}>
         <ThemeProvider attribute="class">
-          <LanguageProvider>
-            <IntlProvider locale={lang} messages={messages}>
-              <Header />
-              {children}
-            </IntlProvider>
-          </LanguageProvider>
+          <IntlProvider locale={lang} messages={messages}>
+            <SideWithNav />
+            {children}
+            <ToastContainer />
+          </IntlProvider>
         </ThemeProvider>
       </body>
     </html>
