@@ -1,16 +1,15 @@
 "use client";
-import React from "react";
-import { useFormik } from "formik";
-import * as yup from "yup";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { usePathname, useRouter } from "next/navigation";
-import LoadingState from "./Loading";
+import { useFormik } from "formik";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { useCookies } from "react-cookie";
+import { toast } from "react-toastify";
+import * as yup from "yup";
+import LoadingState from "./Loading";
 
-const LoginForm = () => {
+const LoginForm = ({ currentLang }) => {
   const router = useRouter();
-  const pathname = usePathname();
   const [cookies, setCookie] = useCookies(["sessionID", "universalID"]);
   const validationSchema = yup.object({
     username: yup.string().required("Username must be required."),
@@ -26,7 +25,6 @@ const LoginForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      const currentLang = pathname.split("/")[1] || "en";
       startTransition(async () => {
         try {
           const response = await axios.post(

@@ -41,7 +41,7 @@ export default async function RootLayout({ children, params }) {
         <Providers lang={lang}>
           <ThemeProvider attribute="class">
             <IntlProvider locale={lang} messages={messages}>
-              <SideWithNav />
+              <SideWithNav currentLang={lang} />
               {children}
               <ToastContainer />
             </IntlProvider>

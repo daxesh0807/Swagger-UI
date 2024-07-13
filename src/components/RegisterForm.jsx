@@ -1,16 +1,14 @@
 "use client";
 import axios from "axios";
 import { useFormik } from "formik";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
 import LoadingState from "./Loading";
 
-const RegisterForm = () => {
+const RegisterForm = ({ currentLang }) => {
   const router = useRouter();
-  const pathname = usePathname();
-  const currentLang = pathname.split("/")[1] || "en";
   const [isLoading, startTransition] = React.useTransition();
   const formik = useFormik({
     initialValues: {

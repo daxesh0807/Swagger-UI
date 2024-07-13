@@ -12,13 +12,12 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 
-const SideWithNav = () => {
+const SideWithNav = ({ currentLang }) => {
   const { theme, setTheme } = useTheme();
   const [isDark, setIsDark] = useState(false);
   const t = useTranslations();
   const router = useRouter();
   const pathname = usePathname();
-  const currentLang = pathname.split("/")[1] || "en";
   const isRTL = currentLang === "ar";
 
   useEffect(() => {
