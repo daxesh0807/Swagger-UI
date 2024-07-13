@@ -39,7 +39,7 @@ const SideWithNav = () => {
     },
     {
       name: t("liveCasino"),
-      href: `#`,
+      href: `/live-casino`,
       current: pathname.endsWith("/live-casino"),
     },
   ];

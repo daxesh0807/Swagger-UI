@@ -1,12 +1,12 @@
 /** @type {import('next').NextConfig} */
-const withNextIntl = require('next-intl/plugin')("./next-intl.config.js");
+const withNextIntl = require("next-intl/plugin")("./next-intl.config.js");
 
 const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/',
-        destination: '/en',
+        source: "/",
+        destination: "/en",
         permanent: false,
       },
     ];
