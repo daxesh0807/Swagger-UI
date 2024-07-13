@@ -19,9 +19,7 @@ const RegisterForm = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string()
-        .max(15, "Must be 15 characters or less")
-        .required("Username must be required."),
+      username: Yup.string().required("Username must be required."),
       email: Yup.string()
         .email("Invalid email address")
         .required("Email must be required."),
@@ -38,6 +36,7 @@ const RegisterForm = () => {
           );
           console.log("response.data", response.data);
           localStorage.setItem("registerInfo", JSON.stringify(response.data));
+          toast.success("User Register Successfully!!!");
           router.push(`/${currentLang}/login`);
         } catch (error) {
           const message = error?.response?.data?.error || error?.message;
@@ -150,17 +149,15 @@ const RegisterForm = () => {
             </div>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              className={`flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
-                isLoading ? "cursor-not-allowed" : ""
-              }`}
-              disabled={isLoading == true ? true : false}
-            >
-              {isLoading ? <LoadingState /> : "Register"}
-            </button>
-          </div>
+          <button
+            type="submit"
+            className={`flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${
+              isLoading ? "cursor-not-allowed" : ""
+            }`}
+            disabled={isLoading == true ? true : false}
+          >
+            {isLoading ? <LoadingState /> : "Register"}
+          </button>
         </form>
       </div>
     </div>

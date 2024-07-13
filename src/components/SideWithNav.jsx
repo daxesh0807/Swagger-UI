@@ -73,7 +73,7 @@ const SideWithNav = () => {
                   <div className="flex items-center lg:hidden">
                     <DisclosureButton className="group relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                       <span className="absolute -inset-0.5" />
-                      <span className="sr-only">{t("openMainMenu")}</span>
+                      <span className="sr-only">openMainMenu</span>
                       {open ? (
                         <XMarkIcon
                           className="block h-6 w-6"
@@ -89,7 +89,7 @@ const SideWithNav = () => {
                   </div>
                   <a href="https://flowbite.com" className="flex ms-2 md:me-24">
                     <img
-                      alt={t("companyLogo")}
+                      alt="companyLogo"
                       src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                       className="h-8 w-auto"
                     />
@@ -128,8 +128,8 @@ const SideWithNav = () => {
                       onChange={handleChangeLanguage}
                       value={pathname.split("/")[1]}
                     >
-                      <option value="en">{t("english")}</option>
-                      <option value="ar">{t("arabic")}</option>
+                      <option value="en">English</option>
+                      <option value="ar">Arabic</option>
                     </select>
                   </div>
                   <Switch
@@ -137,7 +137,7 @@ const SideWithNav = () => {
                     onChange={handleThemeToggle}
                     className="group flex w-8 flex-none cursor-pointer rounded-full bg-gray-200 p-px ring-1 ring-inset ring-gray-900/5 transition-colors duration-200 ease-in-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 data-[checked]:bg-indigo-600"
                   >
-                    <span className="sr-only">{t("toggleTheme")}</span>
+                    <span className="sr-only">toggleTheme</span>
                     <span
                       aria-hidden="true"
                       className={classNames(

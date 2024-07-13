@@ -2,25 +2,55 @@
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-
-const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email("Invalid email format")
-    .required("Email is required"),
-  password: yup.string().required("Password is required"),
-});
+import axios from "axios";
+import { toast } from "react-toastify";
+import { usePathname, useRouter } from "next/navigation";
+import LoadingState from "./Loading";
+import { useCookies } from "react-cookie";
 
 const LoginForm = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [cookies, setCookie] = useCookies(["sessionID", "universalID"]);
+  const validationSchema = yup.object({
+    username: yup.string().required("Username must be required."),
+    password: yup.string().required("Password is required"),
+  });
+
+  const [isLoading, startTransition] = React.useTransition();
+
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      // Handle form submission logic here
-      console.log(values);
+      const currentLang = pathname.split("/")[1] || "en";
+      startTransition(async () => {
+        try {
+          const response = await axios.post(
+            "https://pazuru-com-api.stage.norway.everymatrix.com/v1/player/login/Player",
+            values
+          );
+          console.log("response.data", response.data);
+          setCookie("sessionID", response.data?.sessionID, {
+            path: "/",
+            maxAge: 20 * 60 * 60, // 20 hours in seconds
+          });
+
+          setCookie("universalID", response.data?.universalID, {
+            path: "/",
+            maxAge: 20 * 60 * 60, // 20 hours in seconds
+          });
+          toast.success("User Login Successfully!!!");
+          router.push(`/${currentLang}/casino`);
+        } catch (error) {
+          const message = error?.response?.data?.error || error?.message;
+          const splitArrayMessage = message.split(", ")?.[2];
+          toast.error(splitArrayMessage);
+        }
+      });
     },
   });
 
@@ -41,28 +71,28 @@ const LoginForm = () => {
         <form onSubmit={formik.handleSubmit} className="space-y-6">
           <div>
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="block text-sm font-medium leading-6 text-black dark:text-white"
             >
-              Email address
+              Username
             </label>
             <div className="mt-2">
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                {...formik.getFieldProps("email")}
+                id="username"
+                name="username"
+                type="username"
+                autoComplete="username"
+                {...formik.getFieldProps("username")}
                 className={
                   "block w-full rounded-md border-0 px-2.5 py-1.5 text-black dark:text-white shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" +
-                  (formik.errors.email && formik.touched.email
+                  (formik.errors.username && formik.touched.username
                     ? " ring-red-500"
                     : "")
                 }
               />
-              {formik.errors.email && formik.touched.email && (
+              {formik.errors.username && formik.touched.username && (
                 <p className="mt-2 text-sm text-red-500">
-                  {formik.errors.email}
+                  {formik.errors.username}
                 </p>
               )}
             </div>
@@ -102,9 +132,13 @@ const LoginForm = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              className={
+                "flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" +
+                (isLoading ? " cursor-not-allowed" : "")
+              }
+              disabled={isLoading == true ? true : false}
             >
-              Log in
+              {isLoading ? <LoadingState /> : " Log in"}
             </button>
           </div>
         </form>

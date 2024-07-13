@@ -3,5 +3,10 @@ export const defaultLocale = 'en';
 
 module.exports = {
   locales,
-  defaultLocale
+  defaultLocale,
+  pages: {
+    '*': ['common'],
+  },
+  loadLocaleFrom: (locale, namespace) =>
+    import(`./src/public/locales/${locale}/${namespace}`).then((m) => m.default),
 };
