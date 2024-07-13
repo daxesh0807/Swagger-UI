@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 const CasinoView = () => {
-  const dispatch = useDispatch();
-  const { data, isLoading, error } = useSelector((state) => state.someReducer);
+  // const dispatch = useDispatch();
+  // const { data, isLoading, error } = useSelector((state) => state.someReducer);
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 mt-10 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">

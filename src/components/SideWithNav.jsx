@@ -38,7 +38,7 @@ const SideWithNav = () => {
       current: pathname.endsWith("/casino"),
     },
     {
-      name: t("live-casino"),
+      name: t("liveCasino"),
       href: `/live-casino`,
       current: pathname.endsWith("/live-casino"),
     },
