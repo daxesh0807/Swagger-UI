@@ -34,7 +34,6 @@ const RegisterForm = () => {
             "https://pazuru-com-api.stage.norway.everymatrix.com/v1/player/quickRegister",
             values
           );
-          console.log("response.data", response.data);
           localStorage.setItem("registerInfo", JSON.stringify(response.data));
           toast.success("User Register Successfully!!!");
           router.push(`/${currentLang}/login`);

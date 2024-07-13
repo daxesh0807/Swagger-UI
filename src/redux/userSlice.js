@@ -9,7 +9,6 @@ const userSlice = createSlice({
   },
   reducers: {
     fetchUserStart: (state) => {
-      console.log("inside the functrion:::::::::::", state);
       state.loading = true;
     },
     fetchUserSuccess: (state, action) => {

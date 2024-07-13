@@ -4,36 +4,28 @@ import {
   fetchUserSuccess,
   fetchUserFailure,
 } from "./userSlice";
-import { useCookies } from "react-cookie";
+import Cookies from "js-cookie";
 
 function* fetchUser() {
   try {
-    // Get the session ID from cookies
-    const [cookies] = useCookies(["sessionID", "universalID"]);
+    const sessionId = Cookies.get("sessionID");
 
-    console.log("cookies::::::::::", cookies)
-
-    if (!cookies?.sessionID) {
+    if (!sessionId) {
       throw new Error("Session ID not found in cookies");
     }
 
-    // Define the API URL
     const apiUrl =
       "https://pazuru-com-api.stage.norway.everymatrix.com/v1/player/session/player";
 
-    // Define the request options
     const requestOptions = {
       method: "GET",
       headers: {
-        "X-SessionId": cookies.sessionID,
-        "Content-Type": "application/json",
+        "X-SessionId": sessionId,
       },
     };
 
-    // Make the API call
     const response = yield call(fetch, apiUrl, requestOptions);
 
-    // Check if the response is ok
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

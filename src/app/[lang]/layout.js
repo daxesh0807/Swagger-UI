@@ -19,20 +19,17 @@ export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ar" }];
 }
 
-// Utility function to determine text direction
 const getDirection = (lang) => (lang === "ar" ? "rtl" : "ltr");
 
 export default async function RootLayout({ children, params }) {
-  console.log("params:::::::::", params);
   const lang = params.lang || "en";
-  console.log("lang:::::::::", lang);
 
   let messages;
   try {
     messages = (await import(`../../public/locales/${lang}/common.json`))
       .default;
   } catch (error) {
-    console.log("error::::::::", error);
+    console.log("error", error);
     notFound();
   }
 

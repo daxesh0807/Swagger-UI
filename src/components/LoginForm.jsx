@@ -33,7 +33,6 @@ const LoginForm = () => {
             "https://pazuru-com-api.stage.norway.everymatrix.com/v1/player/login/Player",
             values
           );
-          console.log("response.data", response.data);
           setCookie("sessionID", response.data?.sessionID, {
             path: "/",
             maxAge: 20 * 60 * 60, // 20 hours in seconds
