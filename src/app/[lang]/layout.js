@@ -38,7 +38,7 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={lang} dir={dir}>
       <body className={inter.className}>
-        <Providers>
+        <Providers lang={lang}>
           <ThemeProvider attribute="class">
             <IntlProvider locale={lang} messages={messages}>
               <SideWithNav />
